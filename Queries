@@ -1,0 +1,48 @@
+// SOSL
+FIND {united}
+IN ALL FIELDS
+Returning Account(Id, Name, Industry),
+          Opportunity (Id, Name, StageName WHERE StageName = 'Closed Won')
+
+
+// SOQL
+SELECT Id, Name, AnnualRevenue
+FROM Account
+WHERE AnnualRevenue > 0
+ORDER BY AnnualRevenue DESC 
+LIMIT 5
+
+============================================
+// Relationship queries
+// Child to Parent
+// 1) Standard Objects
+SELECT Id, Name, AccountId, Account.Name,
+		Account.Industry, Account.AnnualRevenue
+FROM Opportunity
+
+// 2) Custom Objects
+SELECT Id, Name, Teacher__c, Teacher__r.Name,
+		Teacher__r.Start_Date__c
+From Student__c
+
+// Parent to Child
+// 1) Standard Objects
+SELECT Id, Name, Industry,
+	(SELECT Id, Name, StageName FROM Opportunities)
+FROM Account
+
+
+// 2) Custom Objects
+SELECT Id, Name, Start_Date__c,
+	(SELECT Id, Name FROM Students__r)
+FROM Teacher__c
+
+============================================
+// Join queries
+SELECT Id, Name, AnnualRevenue
+FROM Account
+WHERE Id IN (SELECT AccountId FROM Opportunity)
+
+SELECT Id, Name
+FROM Account
+WHERE Name IN ('sforce', 'genepoint')
