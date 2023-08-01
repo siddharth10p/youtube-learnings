@@ -1,0 +1,79 @@
+// Variables
+Integer i = 0;
+Account acct = [SELECT Id, Name, AnnualRevenue FROM Account LIMIT 1];
+System.debug(' i ==> ' + i);
+System.debug(' acct ==> ' + acct);
+
+/////////////////////////////////////////
+/////// List
+/////////////////////////////////////////
+List<String> strList = new List<String>();
+strList.add('Test - D');
+strList.add('Test - A');
+strList.add('Test - U');
+strList.add('Test - A');
+
+System.debug(' total elements => ' + strList.size());
+System.debug(' List Values => ' + strList);
+System.debug(' Value at 2nd index => ' + strList.get(2));
+
+/////////////////////////////////////////
+/////// Set
+/////////////////////////////////////////
+Set<String> strSet = new Set<String>();
+strSet.add('Test - D');
+strSet.add('Test - A');
+strSet.add('Test - U');
+strSet.add('Test - A');
+
+System.debug(' total elements => ' + strSet.size());
+System.debug(' Set Values => ' + strSet);
+//System.debug(' Value at 2nd index => ' + strSet.get(2));
+
+/////////////////////////////////////////
+/////// Map
+/////////////////////////////////////////
+Map<Integer, String> intStrMap = new Map<Integer, String>();
+intStrMap.put(3, 'Test - D');
+intStrMap.put(1, 'Test - A');
+intStrMap.put(6, 'Test - U');
+intStrMap.put(4, 'Test - A');
+intStrMap.put(6, 'Test - I');
+
+System.debug(' total elements => ' + intStrMap.size());
+System.debug(' Map Values => ' + intStrMap);
+System.debug(' Value at 2nd index => ' + intStrMap.get(6));
+
+
+/////////////////////////////////////////
+/////// Loops
+/////////////////////////////////////////
+
+// While loop
+Integer i = 0;
+while (i < 10) {
+  	System.debug(' value of i ==> ' + i);
+    i++; // i = i+1
+}
+System.debug(' While ends here!');
+
+// Do while loop
+Integer n = 0;
+do{
+  	System.debug(' value of n ==> ' + n);
+    n++; // i = i+1
+} while(n < 10);
+System.debug(' D-while ends here!');
+
+// traditional for
+for (Integer k=0; k<10; k++) {
+    System.debug(' value of k ==> ' + k);
+}
+System.debug(' for loop ends here!');
+
+// advanced for
+List<Account> acctList = [SELECT Name FROM Account LIMIT 5];
+for (Account acct : acctList){
+    System.debug(' acct name is ==> ' + acct.Name);
+}
+System.debug(' for loop ends here!');
