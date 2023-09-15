@@ -1,0 +1,32 @@
+/**
+ *  Description: This trigger will create a default contact for newly created account if the annual revenue is greater than 50000
+ **/
+trigger AccountTrigger on Account (after insert) {
+	List<Contact> conListToInsert = new List<Contact>();
+    for(Account acct : Trigger.new) {
+        if(acct.AnnualRevenue > 50000){
+          	Contact con = new Contact();
+            con.FirstName = 'Default';
+            con.LastName = 'Contact';
+            con.AccountId = acct.Id;
+            conListToInsert.add(con);
+        }
+    } // End for
+    if(conListToInsert.size() > 0) {
+        insert conListToInsert;
+    } // End if
+} // End trigger
+
+
+
+==============================================
+
+trigger ContactTrigger on Contact (before insert) {
+    for(Contact con : Trigger.new) {
+        if (String.isBlank(con.Title)) {
+            con.Title = 'Business User';
+        } // End if
+    } // End for
+} // End trigger
+
+============================================
