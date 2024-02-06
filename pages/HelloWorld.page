@@ -8,7 +8,7 @@
             </apex:pageBlockSection>
         </apex:pageBlock>
         <apex:pageBlock >
-            <apex:detail relatedList="false"/>
+            <apex:detail/>
         </apex:pageBlock>
     </apex:form>
 </apex:page>
