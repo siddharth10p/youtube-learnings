@@ -1,0 +1,23 @@
+<apex:page standardController="Opportunity" recordSetVar="opptyList">
+    <apex:form >
+        <apex:pageblock >
+            <!-- Data Table -->
+            <apex:pageBlockTable value="{!opptyList}" var="opp">
+                
+                <apex:column headerValue="Business Deals">
+                    <apex:outputLink value="/{!opp.id}" target="_blank">
+                        {!opp.name}
+                    </apex:outputLink>
+                </apex:column>
+                
+                <apex:column value="{!opp.account.name}"/>
+                <apex:column value="{!opp.stageName}"/>
+                <apex:column value="{!opp.amount}"/>
+            </apex:pageBlockTable>
+            <apex:pageblockButtons >
+                <apex:commandButton value="Previous" action="{!previous}" disabled="{!hasPrevious==false}"/>
+                <apex:commandButton value="Next" action="{!next}" disabled="{!hasNext==false}"/>
+            </apex:pageblockButtons>
+        </apex:pageblock>
+    </apex:form>
+</apex:page>
