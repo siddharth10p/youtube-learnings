@@ -1,0 +1,11 @@
+ROUND( VALUE( $Label.Workhours_a_Day)  * ( 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( ClosedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) + 
+      MIN(VALUE($Label.Workdays_a_Week), FLOOR ( MOD ( ClosedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( ClosedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time  ), 1 ) ) )) 
+    ) 
+   - 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( CreatedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) +  MIN( VALUE( $Label.Workdays_a_Week) , 
+      FLOOR( MOD( CreatedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( CreatedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 1) 
+      ) )) 
+    ) 
+  ), 
+2 )
