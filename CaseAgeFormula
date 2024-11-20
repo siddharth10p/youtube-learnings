@@ -4,7 +4,7 @@
 */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ROUND( VALUE( $Label.Workhours_a_Day)  * ( 
+(ROUND( VALUE( $Label.Workhours_a_Day)  * ( 
     ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( IF(ISNULL(ClosedDate), NOW(), ClosedDate) - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) + 
       MIN(VALUE($Label.Workdays_a_Week), FLOOR ( MOD ( IF(ISNULL(ClosedDate), NOW(), ClosedDate) - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( IF(ISNULL(ClosedDate), NOW(), ClosedDate) - DATETIMEVALUE(  $Label.Week_Start_Day_Time  ), 1 ) ) )) 
     ) 
@@ -14,7 +14,7 @@ ROUND( VALUE( $Label.Workhours_a_Day)  * (
       ) )) 
     ) 
   ), 
-2 )
+2 )) * 60
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
