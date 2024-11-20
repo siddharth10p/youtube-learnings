@@ -1,6 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+* This is for case age
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ROUND( VALUE( $Label.Workhours_a_Day)  * ( 
-    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( ClosedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) + 
-      MIN(VALUE($Label.Workdays_a_Week), FLOOR ( MOD ( ClosedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( ClosedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time  ), 1 ) ) )) 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( IF(ISNULL(ClosedDate), NOW(), ClosedDate) - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) + 
+      MIN(VALUE($Label.Workdays_a_Week), FLOOR ( MOD ( IF(ISNULL(ClosedDate), NOW(), ClosedDate) - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( IF(ISNULL(ClosedDate), NOW(), ClosedDate) - DATETIMEVALUE(  $Label.Week_Start_Day_Time  ), 1 ) ) )) 
     ) 
    - 
     ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( CreatedDate - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) +  MIN( VALUE( $Label.Workdays_a_Week) , 
@@ -9,3 +15,34 @@ ROUND( VALUE( $Label.Workhours_a_Day)  * (
     ) 
   ), 
 2 )
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+* This is for case age formula in the flow
+*/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+IF(ISNULL({!$Record.Duration_In_Last_Status__c}), 
+    (ROUND( VALUE( $Label.Workhours_a_Day)  * ( 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( IF(ISNULL({!$Record.ClosedDate}), NOW(), {!$Record.ClosedDate})  - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) + 
+      MIN(VALUE($Label.Workdays_a_Week), FLOOR ( MOD (  IF(ISNULL({!$Record.ClosedDate}), NOW(), {!$Record.ClosedDate}) - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD(  IF(ISNULL({!$Record.ClosedDate}), NOW(), {!$Record.ClosedDate}) - DATETIMEVALUE(  $Label.Week_Start_Day_Time  ), 1 ) ) )) 
+    ) 
+   - 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( {!$Record.CreatedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) +  MIN( VALUE( $Label.Workdays_a_Week) , 
+      FLOOR( MOD( {!$Record.CreatedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( {!$Record.CreatedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 1) 
+      ) )) 
+    ) 
+  ), 
+2 )) * 60, 
+   ((ROUND( VALUE( $Label.Workhours_a_Day)  * ( 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( IF(ISNULL({!$Record.ClosedDate}), NOW(), {!$Record.ClosedDate})  - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) + 
+      MIN(VALUE($Label.Workdays_a_Week), FLOOR ( MOD (  IF(ISNULL({!$Record.ClosedDate}), NOW(), {!$Record.ClosedDate}) - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD(  IF(ISNULL({!$Record.ClosedDate}), NOW(), {!$Record.ClosedDate}) - DATETIMEVALUE(  $Label.Week_Start_Day_Time  ), 1 ) ) )) 
+    ) 
+   - 
+    ( VALUE( $Label.Workdays_a_Week)  * FLOOR( ( {!$Record.CreatedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time ) ) / 7) +  MIN( VALUE( $Label.Workdays_a_Week) , 
+      FLOOR( MOD( {!$Record.CreatedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 7) / 1) + MIN( 1, 24 / VALUE( $Label.Workhours_a_Day) * ( MOD( {!$Record.CreatedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time ), 1) 
+      ) )) 
+    ) 
+  ), 
+2 ))  * 60 ) -  {!$Record.Duration_In_Last_Status__c} )
