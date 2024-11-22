@@ -1,0 +1,35 @@
+CASE(FLOOR( MOD( {!$Record.LastModifiedDate}  - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT), 7)),
+    4, IF(AND((24 / VALUE( $Label.Workhours_a_Day ) * ( MOD( ({!$Record.LastModifiedDate}  + (VALUE($Label.Owner_Notification)/24)) - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) <  1),
+
+          (24 / VALUE( $Label.Workhours_a_Day ) * ( MOD( {!$Record.LastModifiedDate}   - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) <  1)),
+           {!$Record.LastModifiedDate}  + (VALUE($Label.Owner_Notification)/24),
+
+           IF(24 / VALUE( $Label.Workhours_a_Day ) * ( MOD( {!$Record.LastModifiedDate} - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) < 1,
+
+              ({!$Record.LastModifiedDate} +((24 - (VALUE( $Label.Workhours_a_Day ) * 24 / VALUE( $Label.Workhours_a_Day ) * MOD({!$Record.LastModifiedDate}   -  
+              DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) ) + 48 + VALUE($Label.Owner_Notification) - (VALUE( $Label.Workhours_a_Day ) * ( 1 - 24 / VALUE( $Label.Workhours_a_Day ) * MOD( ({!$Record.LastModifiedDate} )  - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)))) / 24),
+              
+              {!$Record.LastModifiedDate}  +(((24 - (VALUE( $Label.Workhours_a_Day ) * 24 / VALUE( $Label.Workhours_a_Day ) * MOD({!$Record.LastModifiedDate}   -   DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) ) + 48 + VALUE($Label.Owner_Notification)))/24
+          )
+      ),
+
+5, ({!$Record.LastModifiedDate} + ((24 - (VALUE( $Label.Workhours_a_Day ) * 24 / VALUE( $Label.Workhours_a_Day ) * MOD({!$Record.LastModifiedDate}   -  
+    DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) + 24) + VALUE($Label.Owner_Notification)) / 24),
+
+6, ({!$Record.LastModifiedDate} +((24 - (VALUE( $Label.Workhours_a_Day ) * 24 / VALUE( $Label.Workhours_a_Day ) * MOD({!$Record.LastModifiedDate}  -  
+        DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) ) + 6) / 24),
+
+IF(AND((24 / VALUE( $Label.Workhours_a_Day ) * ( MOD( ({!$Record.LastModifiedDate}  + (VALUE($Label.Owner_Notification)/24)) - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) <  1),
+      (24 / VALUE( $Label.Workhours_a_Day ) * ( MOD( {!$Record.LastModifiedDate}  - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) <  1)),
+     {!$Record.LastModifiedDate}  + (VALUE($Label.Owner_Notification)/24),
+     IF(24 / VALUE( $Label.Workhours_a_Day ) * ( MOD( {!$Record.LastModifiedDate}   - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) < 1,
+
+        ({!$Record.LastModifiedDate} +((24 - (VALUE( $Label.Workhours_a_Day ) * 24 / VALUE( $Label.Workhours_a_Day ) * MOD({!$Record.LastModifiedDate}   -  
+        DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) ) + VALUE($Label.Owner_Notification) - (VALUE( $Label.Workhours_a_Day )*( 1 - 24 / VALUE( $Label.Workhours_a_Day ) * MOD( ({!$Record.LastModifiedDate}   )  - DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)))) / 24),
+
+        {!$Record.LastModifiedDate} + (((24 - (VALUE( $Label.Workhours_a_Day ) * 24 / VALUE( $Label.Workhours_a_Day ) * MOD({!$Record.LastModifiedDate}   -  
+        DATETIMEVALUE(  $Label.Week_Start_Day_Time_GMT  ), 1)) ) + VALUE($Label.Owner_Notification)))/24
+
+    )
+  )
+)
